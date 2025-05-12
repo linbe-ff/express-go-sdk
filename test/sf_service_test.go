@@ -1,14 +1,15 @@
-package express
+package test
 
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/linbe-ff/express-go-sdk"
 	"testing"
 	"time"
 )
 
 func TestSfRouter(t *testing.T) {
-	sfReq := SFRouterReq{
+	sfReq := express.SFRouterReq{
 		Language:       "0",
 		TrackingType:   "1",
 		TrackingNumber: []string{"SF316xxxxxxxxxxx"},
@@ -25,7 +26,7 @@ func TestSfRouter(t *testing.T) {
 	//}
 	//ccode := viper.GetString("sf.customerCode")
 	//checkCode := viper.GetString("sf.checkCode")
-	sfService := NewExpressService("xxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxxxxx")
+	sfService := express.NewExpressService("xxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxxxxx")
 
 	msgData := string(msgDataBytes)
 	timestamp := time.Now().Unix()
