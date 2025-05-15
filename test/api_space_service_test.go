@@ -20,3 +20,13 @@ func TestApiSpaceService(t *testing.T) {
 	fmt.Println(routes)
 
 }
+
+func TestApiSpaceServiceDiscern(t *testing.T) {
+	asCient := express.NewAPISpaceService("xxxxxxxxxxxxxxxxxxxxx")
+	routes, err := asCient.MailDiscern(context.Background(), "dfSF316322510125")
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println(routes)
+
+}
