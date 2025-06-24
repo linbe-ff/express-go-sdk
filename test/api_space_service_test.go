@@ -13,6 +13,7 @@ func TestApiSpaceService(t *testing.T) {
 		CpCode: "SF",
 		MailNo: "SFxxxxxxxxxxxxxx",
 		Tel:    "0714",
+		Key:    "xxxx",
 	})
 	if err != nil {
 		t.Error(err)
@@ -23,7 +24,7 @@ func TestApiSpaceService(t *testing.T) {
 
 func TestApiSpaceServiceDiscern(t *testing.T) {
 	asCient := express.NewAPISpaceService("xxxxxxxxxxxxxxxxxxxxx")
-	routes, err := asCient.MailDiscern(context.Background(), "dfSF316322510125")
+	routes, err := asCient.MailDiscern(context.Background(), "dfSF316322510125", "key")
 	if err != nil {
 		t.Error(err)
 	}

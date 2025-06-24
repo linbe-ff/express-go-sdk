@@ -22,6 +22,7 @@ type APISpaceReq struct {
 	MailNo    string `json:"mailNo"`    // 运单号
 	Tel       string `json:"tel"`       // 收件人电话
 	OrderType string `json:"orderType"` // 降序升序
+	Key       string `json:"key"`       // apiKey
 }
 
 type APISpaceResp struct {
@@ -88,7 +89,7 @@ func (s *apiSpaceService) SearchRoutes(ctx context.Context, req *APISpaceReq) (*
 		return nil, errors.New("MailNo cannot be empty")
 	}
 	if req.CpCode == "" {
-		company, err := s.MailDiscern(ctx, req.MailNo)
+		company, err := s.MailDiscern(ctx, req.MailNo, req.Key)
 		if err != nil {
 			return nil, err
 		}
@@ -136,7 +137,7 @@ func (s *apiSpaceService) SearchRoutes(ctx context.Context, req *APISpaceReq) (*
 
 // MailDiscern 识别物流单号所属的快递公司(免费)
 // @company 快递公司信息 (如果ExpressCompanyList返回为nil，则可能说明单号有问题)
-func (s *apiSpaceService) MailDiscern(ctx context.Context, mailNo string) (company *ExpressCompanyRes, err error) {
+func (s *apiSpaceService) MailDiscern(ctx context.Context, mailNo, key string) (company *ExpressCompanyRes, err error) {
 	api := "/mail_discern"
 	if mailNo == "" {
 		return nil, errors.New("MailNo cannot be empty")
@@ -146,7 +147,7 @@ func (s *apiSpaceService) MailDiscern(ctx context.Context, mailNo string) (compa
 
 	req, _ := http.NewRequest("POST", s.url+api, bytes.NewBuffer(jsonData))
 
-	req.Header.Add("X-APISpace-Token", "9mewdtu8gm9cd7sikf2ikhcemyhh4x5i")
+	req.Header.Add("X-APISpace-Token", key)
 	req.Header.Set("Content-Type", "application/json")
 
 	res, err := http.DefaultClient.Do(req)
